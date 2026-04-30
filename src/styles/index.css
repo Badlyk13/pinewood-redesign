@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import fonts with Cyrillic support */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply font-sans text-pinewood-graphite antialiased;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-pinewood-forest text-white px-8 py-4 rounded-lg font-semibold 
+           hover:bg-pinewood-moss transition-all duration-300 
+           transform hover:scale-105 shadow-lg hover:shadow-xl;
+  }
+  
+  .btn-secondary {
+    @apply border-2 border-white text-white px-8 py-4 rounded-lg font-semibold 
+           hover:bg-white hover:text-pinewood-forest transition-all duration-300;
+  }
+}

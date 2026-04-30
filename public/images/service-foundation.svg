@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#E8DCC4"/>
+  <rect y="400" width="800" height="200" fill="#2E4A2A"/>
+  <rect x="200" y="300" width="400" height="100" fill="#1A2F1A"/>
+  <text x="400" y="550" text-anchor="middle" fill="#2E4A2A" font-size="24">Строительство фундамента</text>
+  <text x="400" y="580" text-anchor="middle" fill="#2E4A2A" font-size="16">Бетонные работы</text>
+</svg>
