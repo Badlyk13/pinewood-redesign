@@ -15,7 +15,7 @@ export default function Hero() {
       {/* Hero Background Image */}
       <div className="absolute inset-0">
         <img
-          src="/hero-forest-house.jpg"
+          src="/images/hero-forest-house.svg"
           alt="Каркасный дом Pinewood Homes в лесу с панорамным остеклением"
           className="w-full h-full object-cover"
         />
