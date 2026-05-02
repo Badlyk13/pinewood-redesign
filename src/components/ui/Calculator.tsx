@@ -1,4 +1,4 @@
-import { useState } from 'framer-motion'
+import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 type Step = 'living-type' | 'bedrooms' | 'area' | 'contact'

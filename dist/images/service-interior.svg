@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#E8DCC4"/>
+  <rect x="150" y="100" width="500" height="350" fill="#FFFFFF"/>
+  <rect x="200" y="150" width="150" height="200" fill="#667eea" opacity="0.6"/>
+  <rect x="450" y="150" width="150" height="200" fill="#667eea" opacity="0.6"/>
+  <text x="400" y="550" text-anchor="middle" fill="#2E4A2A" font-size="24">Внутренняя отделка</text>
+  <text x="400" y="580" text-anchor="middle" fill="#2E4A2A" font-size="16">Гипсокартон и покраска</text>
+</svg>

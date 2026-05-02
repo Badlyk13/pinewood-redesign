@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { motion, type Variants } from 'framer-motion'
 import { Building2, CreditCard } from 'lucide-react'
 
 interface Partner {
@@ -60,12 +60,12 @@ const PartnersSection = () => {
     },
   }
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, scale: 0.8 },
     visible: {
       opacity: 1,
       scale: 1,
-      transition: { duration: 0.4, ease: 'easeOut' },
+      transition: { duration: 0.4 },
     },
   }
 

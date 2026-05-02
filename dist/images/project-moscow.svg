@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#F5F0E6"/>
+  <rect x="200" y="200" width="400" height="250" fill="#3D5A3A"/>
+  <polygon points="200,200 400,100 600,200" fill="#2E4A2A"/>
+  <rect x="250" y="250" width="100" height="100" fill="#E8DCC4"/>
+  <rect x="450" y="250" width="100" height="100" fill="#E8DCC4"/>
+  <text x="400" y="520" text-anchor="middle" fill="#2E4A2A" font-size="20" font-weight="bold">Проект в Московской обл.</text>
+  <text x="400" y="550" text-anchor="middle" fill="#2E4A2A" font-size="16">180 м² · Сдан в 2025</text>
+</svg>

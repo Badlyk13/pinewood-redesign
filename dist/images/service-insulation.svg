@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#E8DCC4"/>
+  <rect x="100" y="150" width="600" height="300" fill="#3D5A3A" opacity="0.8"/>
+  <circle cx="250" cy="300" r="50" fill="#2E4A2A" opacity="0.5"/>
+  <circle cx="400" cy="300" r="50" fill="#2E4A2A" opacity="0.5"/>
+  <circle cx="550" cy="300" r="50" fill="#2E4A2A" opacity="0.5"/>
+  <text x="400" y="550" text-anchor="middle" fill="#2E4A2A" font-size="24">Утепление стен</text>
+  <text x="400" y="580" text-anchor="middle" fill="#2E4A2A" font-size="16">Базальтовая вата</text>
+</svg>

@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { motion, type Variants } from 'framer-motion'
 import { MapPin, Home, Calendar } from 'lucide-react'
 
 interface CaseStudy {
@@ -60,12 +60,12 @@ const CaseStudiesSection = () => {
     },
   }
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, x: -20 },
     visible: {
       opacity: 1,
       x: 0,
-      transition: { duration: 0.6, ease: 'easeOut' },
+      transition: { duration: 0.6 },
     },
   }
 
