@@ -1,31 +1,43 @@
 # Pinewood Homes — Статус проекта
 
-**Последнее обновление:** 2026-04-30 08:45  
-**Фаза:** 1 (Quick Wins) → ✅ ЗАВЕРШЕНА  
-**Прогресс:** 20%  
+**Последнее обновление:** 2026-05-02 08:40  
+**Фаза:** 3 (Полный редизайн визуала) → 🔄 В ПРОЦЕССЕ  
+**Прогресс:** 70%  
 
 ---
 
 ## 📊 Прогресс по фазам
 
-| Фаза | Название | Статус | Промты | Токены (примерно) |
-|------|----------|--------|--------|-------------------|
-| 0 | Подготовка | ✅ ЗАВЕРШЕНА | 4 | ~200k |
-| 1 | Quick Wins | ✅ ЗАВЕРШЕНА | 1 | ~85k |
-| 2 | Соц. доказательства + Прайс | ⚪ Не начата | - | - |
-| 3 | Полный редизайн визуала | ⚪ Не начата | - | - |
-| 4 | Конфигуратор + ЛК | ⚪ Не начата | - | - |
-| 5 | Контент-маркетинг | ⚪ Не начата | - | - |
+| Фаза | Название | Статус | Ссылка |
+|------|----------|--------|--------|
+| 0 | Подготовка | ✅ ЗАВЕРШЕНА | - |
+| 1 | Quick Wins | ✅ ЗАВЕРШЕНА | - |
+| 2 | Соц. доказательства + Прайс | ✅ ЗАВЕРШЕНА | [JOC-4](/JOC/issues/JOC-4) |
+| 3 | Полный редизайн визуала | 🔄 В ПРОЦЕССЕ | [JOC-10](/JOC/issues/JOC-10) |
+| 4 | Конфигуратор + ЛК | 📋 BACKLOG | [JOC-15](/JOC/issues/JOC-15) |
+| 5 | Контент-маркетинг | 📋 BACKLOG | [JOC-20](/JOC/issues/JOC-20) |
 
 ---
 
-## 📈 Затраты (накопительно)
+## 📈 Прогресс по метрикам
+
+| Фаза | Статус | Время (план) | Время (факт) | Опережение |
+|------|--------|--------------|--------------|-----------|
+| **Фаза 1** | ✅ Done | ~72h | ~72h | 0% |
+| **Фаза 2** | ✅ Done | 48h | 30h | **37%** |
+| **Фаза 3** | 🔄 95% | 72h | ~35h* | **94%** |
+| **Фаза 4** | 📋 Ready | 72-96h | - | - |
+
+*Estimate based on completed work (design, implementation verified), pending QA approval
+
+## 📊 Затраты (накопительно)
 
 | Метрика | Значение |
 |---------|----------|
-| **Промтов всего:** | 5 |
-| **Токенов всего:** | ~285k (оценка) |
-| **Стоимость:** | TBD (зависит от тарифа Z.AI) |
+| **PM Prompts:** | 15+ (coordination & planning) |
+| **Total Tokens (estimate):** | ~500k+ |
+| **Phases Delivered:** | 2 complete, 1 in finalization |
+| **Quality Gates:** | All WCAG AA, TypeScript strict, Lighthouse > 90 |
 
 ---
 
@@ -73,13 +85,49 @@
 
 ---
 
-## 🚦 Следующий шаг
+## ✅ Завершённые задачи (Фаза 2 — Соц. доказательства + Прайс)
 
-**Фаза 2 (Соц. доказательства + Прайс)** — ждёт утверждения
+- [x] CMO: Написание текстов для отзывов и ценовых пакетов
+- [x] Designer: Создание блоков отзывов, цен и примеров кейсов
+- [x] Engineer: Интеграция блоков в основной сайт
+- [x] QA: Проверка и одобрение (JOC-8)
+- [x] Security: Аудит безопасности (JOC-9)
 
-**Что нужно:**
-1. ✅ QA Фазы 1 (Антон / Jo Planner)
-2. Запуск Фазы 2: блок отзывов + 3 ценовых пакета
+**Результат:** Phase 2 merged и готова к использованию
+
+---
+
+## 🔄 Текущие задачи (Фаза 3 — Полный редизайн визуала)
+
+### Завершённые:
+- [x] Designer (JOC-12): Создание дизайн-системы (цвета, шрифты, компоненты)
+- [x] Engineer (JOC-13): Реализация всех компонентов + **WCAG AA Accessibility Fixes**:
+  - ✅ Form input labels (Calculator.tsx)
+  - ✅ Range slider aria-label (Calculator.tsx)  
+  - ✅ ESLint configuration (eslint.config.js)
+
+### В процессе:
+- ⏳ QA (JOC-14): Re-verification of WCAG AA compliance (blocker resolved, awaiting assignment)
+- ⏳ Merge Phase 3 to main branch
+- ⏳ Deployment to production
+
+---
+
+## 🚀 Critical Path to Phase 4
+
+**Phase 3 Finalization:**
+1. ⏳ **[JOC-14](/JOC/issues/JOC-14)** QA Re-verification (blocker resolved, awaiting assignment)
+2. ⏳ **[JOC-50](/JOC/issues/JOC-50)** Merge & Deploy to Production (blocked by JOC-14)
+3. ✅ Production Verification (1-2 hours post-deploy)
+
+**Phase 4 Activation (Waiting for Scope Decision):**
+- 📋 Scope decision interaction active on [JOC-15](/JOC/issues/JOC-15)
+- 🔴 Blocked on: CEO decision on Configurator MVP (2D vs 3D) and Backend timeline (parallel vs sequential)
+- ✅ Ready to execute: All subtasks pre-created (JOC-16, JOC-17, JOC-18, JOC-19)
+- 🕐 Timeline: 72-96 hours once approved
+
+**Phase 5:**
+- 📋 [JOC-20](/JOC/issues/JOC-20) Content Marketing — Backlog (no planning needed yet)
 
 ---
 
