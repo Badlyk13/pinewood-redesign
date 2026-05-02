@@ -1,4 +1,4 @@
-import { useState } from 'framer-motion'
+import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 type Step = 'living-type' | 'bedrooms' | 'area' | 'contact'
@@ -25,17 +25,17 @@ export default function Calculator() {
   const progress = ((steps.indexOf(currentStep) + 1) / steps.length) * 100
 
   const handleLivingTypeSelect = (type: 'permanent' | 'seasonal') => {
-    setState(prev => ({ ...prev, livingType: type }))
+    setState((prev: CalculatorState) => ({ ...prev, livingType: type }))
     setCurrentStep('bedrooms')
   }
 
   const handleBedroomsSelect = (count: number) => {
-    setState(prev => ({ ...prev, bedrooms: count }))
+    setState((prev: CalculatorState) => ({ ...prev, bedrooms: count }))
     setCurrentStep('area')
   }
 
   const handleAreaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setState(prev => ({ ...prev, area: parseInt(e.target.value) || 0 }))
+    setState((prev: CalculatorState) => ({ ...prev, area: parseInt(e.target.value) || 0 }))
   }
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -167,11 +167,12 @@ export default function Calculator() {
                 exit={{ opacity: 0, x: -20 }}
                 className="bg-white rounded-2xl p-8 shadow-xl"
               >
-                <h3 className="text-2xl font-semibold text-pinewood-graphite mb-6">
+                <label htmlFor="area-range" className="block text-2xl font-semibold text-pinewood-graphite mb-6">
                   Желаемая площадь дома
-                </h3>
+                </label>
                 <div className="mb-8">
                   <input
+                    id="area-range"
                     type="range"
                     min="50"
                     max="300"
@@ -179,6 +180,10 @@ export default function Calculator() {
                     value={state.area || 100}
                     onChange={handleAreaChange}
                     className="w-full h-3 bg-pinewood-beige/30 rounded-lg appearance-none cursor-pointer accent-pinewood-forest"
+                    aria-label="Площадь дома (м²)"
+                    aria-valuenow={state.area || 100}
+                    aria-valuemin={50}
+                    aria-valuemax={300}
                   />
                   <div className="text-center mt-4">
                     <span className="text-5xl font-bold text-pinewood-forest">
@@ -217,21 +222,29 @@ export default function Calculator() {
                 </p>
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
+                    <label htmlFor="name" className="block text-sm font-medium text-pinewood-graphite mb-2">
+                      Ваше имя
+                    </label>
                     <input
+                      id="name"
                       type="text"
-                      placeholder="Ваше имя"
+                      placeholder="Введите ваше имя"
                       value={state.name}
-                      onChange={(e) => setState(prev => ({ ...prev, name: e.target.value }))}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => setState((prev: CalculatorState) => ({ ...prev, name: e.target.value }))}
                       className="w-full px-4 py-3 border border-pinewood-beige/30 rounded-lg focus:outline-none focus:border-pinewood-forest focus:ring-2 focus:ring-pinewood-forest/20 transition-all"
                       required
                     />
                   </div>
                   <div>
+                    <label htmlFor="phone" className="block text-sm font-medium text-pinewood-graphite mb-2">
+                      Ваш номер телефона
+                    </label>
                     <input
+                      id="phone"
                       type="tel"
                       placeholder="+7 (___) ___-__-__"
                       value={state.phone}
-                      onChange={(e) => setState(prev => ({ ...prev, phone: e.target.value }))}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => setState((prev: CalculatorState) => ({ ...prev, phone: e.target.value }))}
                       className="w-full px-4 py-3 border border-pinewood-beige/30 rounded-lg focus:outline-none focus:border-pinewood-forest focus:ring-2 focus:ring-pinewood-forest/20 transition-all"
                       required
                     />
