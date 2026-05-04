@@ -70,7 +70,7 @@
   --shadow-glow: 0 0 80px -10px oklch(0.72 0.10 75 / 0.40);
 
   /* Fluid typography */
-  --text-display-1: clamp(3rem, 2rem + 5vw, 6rem);
+  --text-display-1: clamp(3.5rem, 2.5rem + 5vw, 7rem);
   --text-display-2: clamp(2.5rem, 1.8rem + 3.5vw, 5rem);
   --text-display-3: clamp(2rem, 1.4rem + 3vw, 4rem);
   --text-heading-lg: clamp(1.5rem, 1rem + 2vw, 2.5rem);
@@ -184,13 +184,23 @@
   html {
     @apply font-sans;
   }
+
+  /* Refined link underlines */
+  a {
+    text-decoration-skip-ink: auto;
+  }
+
+  /* Better selection */
+  ::selection {
+    background: oklch(0.62 0.08 145 / 0.2);
+  }
 }
 
 /* ── Fluid typography utilities ── */
 @utility text-display-1 {
   font-size: var(--text-display-1);
-  line-height: 1.05;
-  letter-spacing: -0.02em;
+  line-height: 1.0;
+  letter-spacing: -0.025em;
 }
 @utility text-display-2 {
   font-size: var(--text-display-2);

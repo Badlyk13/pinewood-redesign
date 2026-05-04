@@ -39,11 +39,11 @@ export function Header() {
         className={cn(
           "fixed top-0 right-0 left-0 z-50 transition-all duration-300",
           scrolled
-            ? "bg-background/80 backdrop-blur-lg border-b border-border shadow-sm"
+            ? "bg-background/85 backdrop-blur-xl border-b border-border/50 shadow-sm"
             : "bg-transparent"
         )}
       >
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto flex h-[4.5rem] max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
             <Logo className="h-9 w-auto" />

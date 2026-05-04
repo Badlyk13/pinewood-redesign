@@ -20,7 +20,7 @@ export default function ContactsPage() {
   return (
     <>
       <Header />
-      <main className="min-h-screen pt-16">
+      <main className="min-h-screen pt-[4.5rem]">
         {/* Hero */}
         <section className="border-b border-border bg-surface">
           <Container className="py-16 sm:py-20">

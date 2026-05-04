@@ -9,12 +9,16 @@ export function TestimonialsSection() {
   const featured = testimonials.slice(0, 3);
 
   return (
-    <section>
-      <Container className="py-16 sm:py-20 lg:py-24">
+    <section className="bg-surface">
+      <Container className="py-20 sm:py-24 lg:py-32">
+        {/* Header */}
         <FadeUp>
-          <div className="text-center">
-            <h2 className="font-serif text-display-3 font-bold text-fg">
-              Отзывы клиентов
+          <div className="max-w-2xl">
+            <span className="text-sm font-medium uppercase tracking-[0.15em] text-primary">
+              Отзывы
+            </span>
+            <h2 className="mt-3 font-serif text-display-3 font-bold text-fg">
+              Что говорят клиенты
             </h2>
             <p className="mt-4 text-lg text-fg-muted">
               Более 600 семей уже живут в наших домах
@@ -22,17 +26,21 @@ export function TestimonialsSection() {
           </div>
         </FadeUp>
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {/* Cards */}
+        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:mt-16 lg:grid-cols-3 lg:gap-6">
           {featured.map((testimonial, index) => (
-            <FadeUp key={testimonial.id} delay={index * 0.1}>
-              <div className="relative rounded-2xl border border-border bg-surface p-6 transition-all duration-300 hover:border-primary/20 hover:shadow-lg lg:p-8">
-                <Quote className="mb-4 h-8 w-8 text-primary/20" />
+            <FadeUp key={testimonial.id} delay={index * 0.08}>
+              <div className="relative h-full rounded-2xl border border-border bg-gradient-to-br from-card via-card to-surface p-6 transition-all duration-500 hover:border-primary/20 hover:shadow-xl lg:p-8">
+                {/* Quote icon */}
+                <Quote className="mb-5 h-8 w-8 text-primary/15" />
 
-                <p className="text-sm leading-relaxed text-fg">
-                  {testimonial.text}
+                {/* Text */}
+                <p className="text-sm leading-relaxed text-fg/90">
+                  &laquo;{testimonial.text}&raquo;
                 </p>
 
-                <div className="mt-6 flex items-center gap-1">
+                {/* Stars */}
+                <div className="mt-5 flex items-center gap-1">
                   {Array.from({ length: testimonial.rating }).map((_, i) => (
                     <Star
                       key={i}
@@ -41,9 +49,9 @@ export function TestimonialsSection() {
                   ))}
                 </div>
 
-                <div className="mt-4 border-t border-border pt-4">
+                {/* Author */}
+                <div className="mt-5 border-t border-border pt-5">
                   <div className="flex items-center gap-3">
-                    {/* Avatar placeholder */}
                     <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold text-primary">
                       {testimonial.name
                         .split(" ")
@@ -55,7 +63,7 @@ export function TestimonialsSection() {
                         {testimonial.name}
                       </div>
                       <div className="text-xs text-fg-muted">
-                        {testimonial.location} &middot; Проект &laquo;{testimonial.project}&raquo;
+                        {testimonial.location} &middot; &laquo;{testimonial.project}&raquo;
                       </div>
                     </div>
                   </div>

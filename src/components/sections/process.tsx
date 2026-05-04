@@ -16,7 +16,7 @@ const steps = [
     number: "02",
     title: "Проектирование",
     description:
-      "Аритектор разрабатывает проект с учётом ваших требований. 3D-визуализация, планировки, спецификации.",
+      "Архитектор разрабатывает проект с учётом ваших требований. 3D-визуализация, планировки, спецификации.",
     duration: "7–14 дней",
   },
   {
@@ -52,78 +52,71 @@ const steps = [
 export function Process() {
   return (
     <section className="bg-surface">
-      <Container className="py-16 sm:py-20 lg:py-24">
+      <Container className="py-20 sm:py-24 lg:py-32">
+        {/* Header */}
         <FadeUp>
-          <div className="text-center">
-            <h2 className="font-serif text-display-3 font-bold text-fg">
-              Как мы строим
+          <div className="max-w-2xl">
+            <span className="text-sm font-medium uppercase tracking-[0.15em] text-primary">
+              Процесс
+            </span>
+            <h2 className="mt-3 font-serif text-display-3 font-bold text-fg">
+              От первого звонка до передачи ключей
             </h2>
-            <p className="mt-4 max-w-2xl text-lg text-fg-muted">
-              От первого звонка до передачи ключей — каждый этап под контролем
+            <p className="mt-4 text-lg text-fg-muted">
+              Каждый этап прозрачен и контролируется. Вы всегда знаете, что происходит на вашей стройке.
             </p>
           </div>
         </FadeUp>
 
-        <div className="relative mt-16">
-          {/* Vertical line (desktop) */}
-          <div className="absolute top-0 bottom-0 left-1/2 hidden w-px -translate-x-1/2 bg-border lg:block" />
+        {/* Timeline */}
+        <div className="relative mt-16 lg:mt-20">
+          {/* Vertical line */}
+          <div className="absolute top-0 bottom-0 left-[23px] w-px bg-border lg:left-1/2 lg:-translate-x-px" />
 
-          <div className="space-y-8 lg:space-y-0">
+          <div className="space-y-10 lg:space-y-0">
             {steps.map((step, index) => (
-              <FadeUp key={step.number} delay={index * 0.08}>
+              <FadeUp key={step.number} delay={index * 0.06}>
                 <div
                   className={cn(
-                    "relative flex flex-col gap-4 lg:flex-row lg:gap-8 lg:py-8",
+                    "relative flex gap-6 lg:min-h-[160px] lg:gap-0",
                     index % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"
                   )}
                 >
                   {/* Content */}
                   <div
                     className={cn(
-                      "flex-1 lg:w-1/2",
-                      index % 2 === 0 ? "lg:text-right lg:pr-12" : "lg:text-left lg:pl-12"
+                      "flex-1 pt-1 lg:w-1/2",
+                      index % 2 === 0
+                        ? "lg:pr-16 lg:text-right"
+                        : "lg:pl-16 lg:text-left"
                     )}
                   >
-                    <div className="flex items-center gap-3 lg:justify-end">
-                      <span className="font-serif text-3xl font-bold text-primary/20">
+                    <div className={cn(
+                      "flex items-start gap-4 lg:items-start",
+                      index % 2 === 0 ? "lg:flex-row-reverse" : "lg:flex-row"
+                    )}>
+                      <span className="font-serif text-5xl font-bold text-primary/10 lg:text-6xl">
                         {step.number}
                       </span>
-                      <h3 className="text-lg font-semibold text-fg">
-                        {step.title}
-                      </h3>
-                    </div>
-                    <p className="mt-2 text-sm leading-relaxed text-fg-muted">
-                      {step.description}
-                    </p>
-                  </div>
-
-                  {/* Center dot */}
-                  <div className="absolute top-2 left-1/2 hidden h-4 w-4 -translate-x-1/2 rounded-full border-2 border-primary bg-background lg:block" />
-
-                  {/* Duration */}
-                  <div className="flex-1 lg:w-1/2 lg:py-2">
-                    <div
-                      className={cn(
-                        "inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2 text-sm",
-                        index % 2 === 0 ? "lg:ml-12" : "lg:mr-12"
-                      )}
-                    >
-                      <svg
-                        className="h-4 w-4 text-primary"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M12 6v6l4 2"
-                        />
-                      </svg>
-                      {step.duration}
+                      <div className="pt-1 lg:pt-2">
+                        <h3 className="text-lg font-semibold text-fg">
+                          {step.title}
+                        </h3>
+                        <p className="mt-2 max-w-sm text-sm leading-relaxed text-fg-muted">
+                          {step.description}
+                        </p>
+                        <span className="mt-3 inline-block text-xs font-medium uppercase tracking-wider text-accent">
+                          {step.duration}
+                        </span>
+                      </div>
                     </div>
                   </div>
+
+                  {/* Center dot — desktop only */}
+                  <div className="absolute top-1 left-[19px] hidden h-3 w-3 rounded-full border-2 border-primary bg-background lg:left-1/2 lg:block lg:-translate-x-1.5" />
+
+                  {/* Empty space for alternating layout — desktop only */}
+                  <div className="hidden flex-1 lg:block lg:w-1/2" />
                 </div>
               </FadeUp>
             ))}

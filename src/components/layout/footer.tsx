@@ -29,9 +29,9 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-border bg-surface">
-      <Container className="py-12 lg:py-16">
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
+    <footer className="border-t border-border">
+      <Container className="py-16 lg:py-20">
+        <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-5 lg:gap-8">
           {/* Brand column */}
           <div className="lg:col-span-2">
             <Link href="/" className="inline-block">
