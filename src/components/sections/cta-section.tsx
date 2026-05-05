@@ -2,12 +2,8 @@
 
 import { Container } from "@/components/shared/container";
 import { FadeUp } from "@/components/motion/fade-up";
-import { Magnetic } from "@/components/motion/magnetic";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { CTAForm } from "@/components/forms/cta-form";
 import { Phone } from "lucide-react";
-import Link from "next/link";
 
 export function CTASection() {
   return (
@@ -51,47 +47,7 @@ export function CTASection() {
 
               {/* Right - form */}
               <FadeUp delay={0.15}>
-                <form
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    alert('Спасибо! Мы свяжемся с вами в ближайшее время.');
-                  }}
-                  className="space-y-4 rounded-2xl border border-white/10 bg-white/[0.07] p-6 backdrop-blur-sm sm:p-8"
-                >
-                  <div>
-                    <Label htmlFor="cta-name" className="text-white/70">
-                      Имя
-                    </Label>
-                    <Input
-                      id="cta-name"
-                      placeholder="Ваше имя"
-                      className="mt-1.5 border-white/15 bg-white/[0.06] text-white placeholder:text-white/30 focus:border-white/30"
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="cta-phone" className="text-white/70">
-                      Телефон
-                    </Label>
-                    <Input
-                      id="cta-phone"
-                      type="tel"
-                      placeholder="+7 (___) ___-__-__"
-                      className="mt-1.5 border-white/15 bg-white/[0.06] text-white placeholder:text-white/30 focus:border-white/30"
-                    />
-                  </div>
-                  <Magnetic>
-                    <Button
-                      type="submit"
-                      size="lg"
-                      className="mt-2 w-full rounded-xl bg-white px-6 py-5 text-base font-semibold text-primary shadow-lg shadow-black/10 transition-all hover:bg-white/90 hover:shadow-xl hover:shadow-black/20"
-                    >
-                      Получить консультацию
-                    </Button>
-                  </Magnetic>
-                  <p className="text-center text-xs text-white/30">
-                    Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности
-                  </p>
-                </form>
+                <CTAForm />
               </FadeUp>
             </div>
           </div>

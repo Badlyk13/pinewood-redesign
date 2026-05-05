@@ -4,6 +4,7 @@ import { Cormorant_Garamond } from "next/font/google";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { LenisProvider } from "@/components/providers/lenis-provider";
+import { SmoothCursor } from "@/components/shared/smooth-cursor";
 import "./globals.css";
 
 const manrope = Manrope({
@@ -50,11 +51,14 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">
-        <NuqsAdapter>
-          <LenisProvider>
-            <ThemeProvider>{children}</ThemeProvider>
-          </LenisProvider>
-        </NuqsAdapter>
+        <div>
+          <SmoothCursor />
+          <NuqsAdapter>
+            <LenisProvider>
+              <ThemeProvider>{children}</ThemeProvider>
+            </LenisProvider>
+          </NuqsAdapter>
+        </div>
       </body>
     </html>
   );

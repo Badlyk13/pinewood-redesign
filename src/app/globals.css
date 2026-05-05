@@ -20,6 +20,7 @@
   --color-fg: var(--fg);
   --color-fg-muted: var(--fg-muted);
   --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
   --color-primary-fg: var(--primary-fg);
   --color-accent: var(--accent);
   --color-accent-fg: var(--accent-fg);
@@ -123,6 +124,16 @@
   --sidebar-accent-foreground: oklch(0.18 0.015 230);
   --sidebar-border: oklch(0.90 0.008 80);
   --sidebar-ring: oklch(0.32 0.04 145);
+
+  /* Floor plan room colors */
+  --room-living: oklch(0.95 0.02 145);
+  --room-bedroom: oklch(0.94 0.02 230);
+  --room-kitchen: oklch(0.95 0.03 75);
+  --room-bathroom: oklch(0.93 0.03 300);
+  --room-hallway: oklch(0.95 0.02 350);
+  --room-terrace: oklch(0.95 0.02 200);
+  --room-garage: oklch(0.93 0.02 60);
+  --room-wardrobe: oklch(0.95 0.01 230);
 }
 
 /* ── Dark theme ── */
@@ -136,8 +147,8 @@
   --surface-elevated: oklch(0.21 0.012 230);
 
   --primary: oklch(0.62 0.08 145);
-  --primary-foreground: oklch(0.13 0.008 230);
-  --primary-fg: oklch(0.13 0.008 230);
+  --primary-foreground: oklch(0.98 0.005 80);
+  --primary-fg: oklch(0.98 0.005 80);
   --accent: oklch(0.78 0.12 75);
   --accent-foreground: oklch(0.13 0.008 230);
   --accent-fg: oklch(0.13 0.008 230);
@@ -166,11 +177,32 @@
   --sidebar: oklch(0.15 0.008 230);
   --sidebar-foreground: oklch(0.95 0.005 80);
   --sidebar-primary: oklch(0.62 0.08 145);
-  --sidebar-primary-foreground: oklch(0.13 0.008 230);
+  --sidebar-primary-foreground: oklch(0.98 0.005 80);
   --sidebar-accent: oklch(0.21 0.010 230);
   --sidebar-accent-foreground: oklch(0.95 0.005 80);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.62 0.08 145);
+
+  /* Floor plan room colors (dark) */
+  --room-living: oklch(0.25 0.03 145);
+  --room-bedroom: oklch(0.25 0.03 230);
+  --room-kitchen: oklch(0.25 0.04 75);
+  --room-bathroom: oklch(0.25 0.04 300);
+  --room-hallway: oklch(0.25 0.03 350);
+  --room-terrace: oklch(0.25 0.03 200);
+  --room-garage: oklch(0.25 0.03 60);
+  --room-wardrobe: oklch(0.25 0.02 230);
+}
+
+/* ── Header transparency states ── */
+.header-at-top .header-invert {
+  color: oklch(0.95 0.005 80);
+}
+.header-at-top .header-invert-subtle {
+  color: oklch(0.95 0.005 80 / 0.7);
+}
+.header-at-top .header-invert-subtle:hover {
+  color: oklch(0.98 0.005 80);
 }
 
 /* ── Base ── */
@@ -222,21 +254,64 @@
   line-height: 1.25;
 }
 
+/* ── Marquee animation ── */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
 /* ── View Transitions ── */
 @view-transition {
   navigation: auto;
 }
 ::view-transition-old(root) {
-  animation: 300ms ease-out both fade-out;
+  animation: 500ms ease-out both theme-wipe-out;
 }
 ::view-transition-new(root) {
-  animation: 300ms ease-in both fade-in;
+  animation: 500ms ease-in both theme-wipe-in;
 }
-@keyframes fade-out {
-  to { opacity: 0; }
+@keyframes theme-wipe-out {
+  to {
+    opacity: 0;
+    clip-path: circle(0% at var(--wipe-x, 50%) var(--wipe-y, 50%));
+  }
 }
-@keyframes fade-in {
-  from { opacity: 0; }
+@keyframes theme-wipe-in {
+  from {
+    opacity: 0;
+    clip-path: circle(0% at var(--wipe-x, 50%) var(--wipe-y, 50%));
+  }
+}
+
+/* ── Shimmer Button animations ── */
+@keyframes shimmer-slide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes spin-around {
+  from {
+    transform: translateZ(0) rotate(0deg);
+  }
+  to {
+    transform: translateZ(0) rotate(360deg);
+  }
+}
+
+.animate-shimmer-slide {
+  animation: shimmer-slide var(--speed, 3s) infinite linear;
+}
+
+.animate-spin-around {
+  animation: spin-around 2s linear infinite;
 }
 
 /* ── Reduced motion ── */

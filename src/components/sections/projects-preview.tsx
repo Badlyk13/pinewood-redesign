@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { Container } from "@/components/shared/container";
@@ -7,6 +8,7 @@ import { FadeUp } from "@/components/motion/fade-up";
 import { Magnetic } from "@/components/motion/magnetic";
 import { projects } from "@/data/projects";
 import { Button } from "@/components/ui/button";
+import { MagicCard } from "@/components/ui/magic-card";
 
 export function ProjectsPreview() {
   const previewProjects = projects.slice(0, 6);
@@ -47,54 +49,59 @@ export function ProjectsPreview() {
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:mt-16 lg:grid-cols-3 lg:gap-6">
           {previewProjects.map((project, index) => (
             <FadeUp key={project.slug} delay={index * 0.06}>
-              <Link
-                href={`/katalog/${project.slug}`}
-                className="group block overflow-hidden rounded-2xl border border-border bg-card transition-all duration-500 hover:border-primary/20 hover:-translate-y-1 hover:shadow-xl"
+              <MagicCard
+                gradientSize={250}
+                gradientColor="#4a7c5c"
+                gradientOpacity={0.08}
+                className="rounded-2xl"
               >
-                {/* Image area */}
-                <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-primary/[0.06] via-primary/[0.03] to-accent/[0.06]">
-                  <div className="flex h-full items-center justify-center">
-                    <span className="text-5xl font-serif font-bold text-primary/15 transition-transform duration-500 group-hover:scale-105">
+                <Link
+                  href={`/katalog/${project.slug}`}
+                  className="group block overflow-hidden rounded-2xl transition-all duration-500 hover:-translate-y-1"
+                >
+                  {/* Image */}
+                  <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-primary/[0.06] via-primary/[0.03] to-accent/[0.06]">
+                    <Image
+                      src={project.images[0]}
+                      alt={`Проект дома ${project.name}`}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    />
+                    {project.popular && (
+                      <span className="absolute top-4 left-4 rounded-full bg-primary px-3 py-1 text-xs font-medium text-primary-fg">
+                        Популярный
+                      </span>
+                    )}
+                    <div className="absolute inset-0 bg-primary/0 transition-colors duration-300 group-hover:bg-primary/5" />
+                  </div>
+
+                  {/* Info */}
+                  <div className="p-5 lg:p-6">
+                    <h3 className="text-lg font-semibold text-fg">
                       {project.name}
-                    </span>
-                  </div>
-
-                  {/* Popular badge */}
-                  {project.popular && (
-                    <span className="absolute top-4 left-4 rounded-full bg-primary px-3 py-1 text-xs font-medium text-primary-fg">
-                      Популярный
-                    </span>
-                  )}
-
-                  {/* Hover overlay */}
-                  <div className="absolute inset-0 bg-primary/0 transition-colors duration-300 group-hover:bg-primary/5" />
-                </div>
-
-                {/* Info */}
-                <div className="p-5 lg:p-6">
-                  <h3 className="text-lg font-semibold text-fg">
-                    {project.name}
-                  </h3>
-                  <div className="mt-2 flex items-center gap-3 text-sm text-fg-muted">
-                    <span>{project.area} м²</span>
-                    <span className="h-1 w-1 rounded-full bg-border" />
-                    <span>{project.floors} {project.floors === 1 ? "этаж" : "этажа"}</span>
-                    <span className="h-1 w-1 rounded-full bg-border" />
-                    <span>{project.bedrooms} {project.bedrooms === 1 ? "спальня" : project.bedrooms < 5 ? "спальни" : "спален"}</span>
-                  </div>
-                  <div className="mt-4 flex items-center justify-between border-t border-border pt-4">
-                    <div>
-                      <span className="text-xs text-fg-muted">от</span>
-                      <span className="ml-1 text-xl font-bold text-primary">
-                        {project.priceFrom.toLocaleString("ru-RU")} ₽
+                    </h3>
+                    <div className="mt-2 flex items-center gap-3 text-sm text-fg-muted">
+                      <span>{project.area} м²</span>
+                      <span className="h-1 w-1 rounded-full bg-border" />
+                      <span>{project.floors} {project.floors === 1 ? "этаж" : "этажа"}</span>
+                      <span className="h-1 w-1 rounded-full bg-border" />
+                      <span>{project.bedrooms} {project.bedrooms === 1 ? "спальня" : project.bedrooms < 5 ? "спальни" : "спален"}</span>
+                    </div>
+                    <div className="mt-4 flex items-center justify-between border-t border-border pt-4">
+                      <div>
+                        <span className="text-xs text-fg-muted">от</span>
+                        <span className="ml-1 text-xl font-bold text-primary">
+                          {project.priceFrom.toLocaleString("ru-RU")} ₽
+                        </span>
+                      </div>
+                      <span className="flex h-8 w-8 items-center justify-center rounded-full border border-border text-fg-muted transition-all duration-300 group-hover:border-primary group-hover:bg-primary group-hover:text-primary-fg">
+                        <ArrowUpRight className="h-4 w-4" />
                       </span>
                     </div>
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full border border-border text-fg-muted transition-all duration-300 group-hover:border-primary group-hover:bg-primary group-hover:text-primary-fg">
-                      <ArrowUpRight className="h-4 w-4" />
-                    </span>
                   </div>
-                </div>
-              </Link>
+                </Link>
+              </MagicCard>
             </FadeUp>
           ))}
         </div>

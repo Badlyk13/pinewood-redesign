@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, Phone } from "lucide-react";
 import { Logo } from "@/components/shared/logo";
 import { ThemeToggle } from "./theme-toggle";
@@ -24,14 +25,22 @@ const navLinks = [
 ];
 
 export function Header() {
-  const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+  const [scrolled, setScrolled] = useState(!isHome);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 20);
+    const handler = () => {
+      if (!isHome) {
+        setScrolled(true);
+        return;
+      }
+      setScrolled(window.scrollY > 20);
+    };
     window.addEventListener("scroll", handler, { passive: true });
     return () => window.removeEventListener("scroll", handler);
-  }, []);
+  }, [isHome]);
 
   return (
     <>
@@ -39,8 +48,8 @@ export function Header() {
         className={cn(
           "fixed top-0 right-0 left-0 z-50 transition-all duration-300",
           scrolled
-            ? "bg-background/85 backdrop-blur-xl border-b border-border/50 shadow-sm"
-            : "bg-transparent"
+            ? "bg-background/85 backdrop-blur-xl border-b border-border/50 shadow-sm header-scrolled"
+            : "bg-transparent header-at-top"
         )}
       >
         <div className="mx-auto flex h-[4.5rem] max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
@@ -55,7 +64,7 @@ export function Header() {
               <div key={link.href + link.label} className="group relative">
                 <Link
                   href={link.href}
-                  className="inline-flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium text-fg-muted transition-colors hover:text-fg"
+                  className="header-invert-subtle inline-flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium text-fg-muted transition-colors hover:text-fg"
                 >
                   {link.label}
                   {link.children && (
@@ -101,11 +110,11 @@ export function Header() {
           </nav>
 
           {/* Right side */}
-          <div className="flex items-center gap-2">
-            <ThemeToggle />
+          <div className="flex shrink-0 items-center gap-2">
+            <ThemeToggle className="header-invert-subtle" />
             <a
               href="tel:+74951234567"
-              className="hidden items-center gap-1.5 text-sm font-medium text-fg-muted transition-colors hover:text-fg sm:flex"
+              className="header-invert-subtle hidden items-center gap-1.5 text-sm font-medium text-fg-muted transition-colors hover:text-fg sm:flex"
             >
               <Phone className="h-4 w-4" />
               +7 (495) 123-45-67

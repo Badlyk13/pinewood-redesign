@@ -1,11 +1,18 @@
-"use client";
-
+import type { Metadata } from "next";
+import { generatePageSEO } from "@/lib/seo";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { Container } from "@/components/shared/container";
 import { FadeUp } from "@/components/motion/fade-up";
 import { Counter } from "@/components/motion/counter";
 import { Button } from "@/components/ui/button";
+
+export const metadata: Metadata = generatePageSEO({
+  title: "О компании",
+  description:
+    "С 2011 года проектируем и строим энергоэффективные загородные дома из клееного бруса. 600+ построенных домов, 47 регионов России, 15 лет опыта.",
+  path: "/o-kompanii",
+});
 
 const milestones = [
   { year: "2011", title: "Основание", description: "Компания Pinewood Homes основана в Подмосковье" },

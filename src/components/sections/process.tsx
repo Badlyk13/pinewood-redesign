@@ -1,5 +1,7 @@
 "use client";
 
+import { useRef, useState } from "react";
+import { motion, useScroll, useTransform, AnimatePresence, useMotionValueEvent } from "motion/react";
 import { Container } from "@/components/shared/container";
 import { FadeUp } from "@/components/motion/fade-up";
 import { cn } from "@/lib/utils";
@@ -50,10 +52,40 @@ const steps = [
 ];
 
 export function Process() {
+  const containerRef = useRef<HTMLElement>(null);
+  const [currentStep, setCurrentStep] = useState(0);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"],
+  });
+
+  // Высота секции = кол-во шагов * 100vh
+  const totalHeight = steps.length * 100;
+
+  // Progress bar animation
+  const scaleX = useTransform(scrollYProgress, [0, 1], [0, 1]);
+
+  // Декоративный элемент — rotate/scale на основе scrollYProgress
+  const rotate = useTransform(scrollYProgress, [0, 1], [0, 360]);
+  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1.2, 0.8]);
+  const strokeDashoffset = useTransform(scrollYProgress, [0, 1], [691.15, 0]);
+
+  // Отслеживаем активный шаг
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    const stepIndex = Math.min(
+      Math.floor(latest * steps.length),
+      steps.length - 1
+    );
+    setCurrentStep(stepIndex);
+  });
+
+  const activeStep = steps[currentStep];
+
   return (
-    <section className="bg-surface">
-      <Container className="py-20 sm:py-24 lg:py-32">
-        {/* Header */}
+    <section className="relative bg-surface">
+      <Container className="relative z-10 py-20 sm:py-24 lg:py-32">
+        {/* Header — вне sticky container */}
         <FadeUp>
           <div className="max-w-2xl">
             <span className="text-sm font-medium uppercase tracking-[0.15em] text-primary">
@@ -68,60 +100,96 @@ export function Process() {
           </div>
         </FadeUp>
 
-        {/* Timeline */}
-        <div className="relative mt-16 lg:mt-20">
-          {/* Vertical line */}
-          <div className="absolute top-0 bottom-0 left-[23px] w-px bg-border lg:left-1/2 lg:-translate-x-px" />
+        {/* Pinned scroll storytelling container */}
+        <section
+          ref={containerRef}
+          className="relative mt-16 lg:mt-20"
+          style={{ height: `${totalHeight}vh` }}
+        >
+          {/* Sticky inner container */}
+          <motion.div
+            style={{ position: "sticky", top: "4.5rem" }}
+            className="min-h-[calc(100vh-4.5rem)] flex items-center"
+          >
+            {/* Progress bar — тонкая полоска сверху */}
+            <motion.div
+              style={{ scaleX }}
+              className="absolute top-0 left-0 right-0 h-0.5 bg-primary origin-left"
+            />
 
-          <div className="space-y-10 lg:space-y-0">
-            {steps.map((step, index) => (
-              <FadeUp key={step.number} delay={index * 0.06}>
-                <div
-                  className={cn(
-                    "relative flex gap-6 lg:min-h-[160px] lg:gap-0",
-                    index % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"
-                  )}
+            {/* Left: Step info */}
+            <div className="flex-1">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentStep}
+                  initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
+                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  exit={{ opacity: 0, y: -30, filter: "blur(8px)" }}
+                  transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
                 >
-                  {/* Content */}
-                  <div
-                    className={cn(
-                      "flex-1 pt-1 lg:w-1/2",
-                      index % 2 === 0
-                        ? "lg:pr-16 lg:text-right"
-                        : "lg:pl-16 lg:text-left"
-                    )}
-                  >
-                    <div className={cn(
-                      "flex items-start gap-4 lg:items-start",
-                      index % 2 === 0 ? "lg:flex-row-reverse" : "lg:flex-row"
-                    )}>
-                      <span className="font-serif text-5xl font-bold text-primary/10 lg:text-6xl">
-                        {step.number}
-                      </span>
-                      <div className="pt-1 lg:pt-2">
-                        <h3 className="text-lg font-semibold text-fg">
-                          {step.title}
-                        </h3>
-                        <p className="mt-2 max-w-sm text-sm leading-relaxed text-fg-muted">
-                          {step.description}
-                        </p>
-                        <span className="mt-3 inline-block text-xs font-medium uppercase tracking-wider text-accent">
-                          {step.duration}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
+                  <span className="block font-serif text-7xl font-bold text-primary/10 lg:text-8xl">
+                    {activeStep.number}
+                  </span>
+                  <h3 className="mt-2 text-2xl font-semibold text-fg lg:text-3xl">
+                    {activeStep.title}
+                  </h3>
+                  <p className="mt-3 max-w-xl text-base leading-relaxed text-fg-muted lg:text-lg">
+                    {activeStep.description}
+                  </p>
+                  <span className="mt-4 inline-block text-xs font-medium uppercase tracking-wider text-accent">
+                    {activeStep.duration}
+                  </span>
+                </motion.div>
+              </AnimatePresence>
+            </div>
 
-                  {/* Center dot — desktop only */}
-                  <div className="absolute top-1 left-[19px] hidden h-3 w-3 rounded-full border-2 border-primary bg-background lg:left-1/2 lg:block lg:-translate-x-1.5" />
+            {/* Right: Visual element — desktop only */}
+            <div className="hidden lg:flex flex-1 items-center justify-center">
+              <div className="relative flex items-center justify-center">
+                <svg className="h-64 w-64 -rotate-90" viewBox="0 0 256 256">
+                  <circle cx="128" cy="128" r="110" fill="none" stroke="color-mix(in oklch, var(--primary), transparent 90%)" strokeWidth="4" />
+                  <motion.circle
+                    cx="128"
+                    cy="128"
+                    r="110"
+                    fill="none"
+                    stroke="var(--primary)"
+                    strokeWidth="4"
+                    strokeLinecap="round"
+                    strokeDasharray={691.15}
+                    style={{ strokeDashoffset }}
+                  />
+                </svg>
+                <motion.div style={{ rotate, scale }} className="absolute flex flex-col items-center">
+                  <span className="font-serif text-7xl font-bold text-primary/20">{activeStep.number}</span>
+                  <span className="mt-1 text-sm font-medium uppercase tracking-wider text-accent">{activeStep.duration}</span>
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.4 }}
+                  className="absolute right-0 bottom-4 rounded-xl border border-border/50 bg-surface/80 p-4 shadow-lg backdrop-blur-md"
+                >
+                  <div className="text-xs font-medium uppercase tracking-wider text-fg-muted">Этап</div>
+                  <div className="mt-1 text-2xl font-bold text-fg">{activeStep.number}<span className="text-fg-muted"> / 06</span></div>
+                </motion.div>
+              </div>
+            </div>
 
-                  {/* Empty space for alternating layout — desktop only */}
-                  <div className="hidden flex-1 lg:block lg:w-1/2" />
-                </div>
-              </FadeUp>
-            ))}
-          </div>
-        </div>
+            {/* Step indicators — dot navigation */}
+            <div className="absolute bottom-8 left-1/2 flex -translate-x-1/2 gap-2">
+              {steps.map((_, i) => (
+                <div
+                  key={i}
+                  className={cn(
+                    "h-1.5 rounded-full transition-all duration-300",
+                    i === currentStep ? "w-8 bg-primary" : "w-1.5 bg-border"
+                  )}
+                />
+              ))}
+            </div>
+          </motion.div>
+        </section>
       </Container>
     </section>
   );

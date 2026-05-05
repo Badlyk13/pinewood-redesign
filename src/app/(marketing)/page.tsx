@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { faqs } from "@/data/faqs";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { Hero } from "@/components/sections/hero";
@@ -7,6 +8,7 @@ import { ProjectsPreview } from "@/components/sections/projects-preview";
 import { Process } from "@/components/sections/process";
 import { TestimonialsSection } from "@/components/sections/testimonials-section";
 import { FAQSection } from "@/components/sections/faq-section";
+import { PartnersSection } from "@/components/sections/partners-section";
 import { CTASection } from "@/components/sections/cta-section";
 import { generatePageSEO } from "@/lib/seo";
 import { faqPageSchema, organizationSchema } from "@/lib/schema-org";
@@ -30,7 +32,7 @@ export default function HomePage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(faqPageSchema([])),
+          __html: JSON.stringify(faqPageSchema(faqs)),
         }}
       />
       <Header />
@@ -41,6 +43,7 @@ export default function HomePage() {
         <Process />
         <TestimonialsSection />
         <FAQSection />
+        <PartnersSection />
         <CTASection />
       </main>
       <Footer />

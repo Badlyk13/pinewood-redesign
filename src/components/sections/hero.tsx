@@ -1,60 +1,37 @@
 "use client";
 
-import { useRef } from "react";
 import Link from "next/link";
-import { motion, useScroll, useTransform } from "motion/react";
+import { motion } from "motion/react";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Magnetic } from "@/components/motion/magnetic";
-import { Counter } from "@/components/motion/counter";
+import { WordReveal } from "@/components/motion/word-reveal";
+import { Aurora } from "@/components/motion/aurora";
+import { ShinyText } from "@/components/motion/shiny-text";
+import { NumberTicker } from "@/components/ui/number-ticker";
 
 export function Hero() {
-  const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"],
-  });
-
-  const videoOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0.4]);
-  const titleY = useTransform(scrollYProgress, [0, 0.5], [0, 60]);
-  const titleBlur = useTransform(scrollYProgress, [0, 0.3], [0, 6]);
-  const contentScale = useTransform(scrollYProgress, [0, 0.5], [1, 0.97]);
-
   return (
-    <section
-      ref={ref}
-      className="relative flex min-h-[100dvh] items-center overflow-hidden"
-    >
+    <section className="relative flex min-h-[100dvh] items-center overflow-hidden">
       {/* Background */}
-      <motion.div
-        className="absolute inset-0 z-0"
-        style={{ opacity: videoOpacity }}
-      >
-        {/* Cinematic multi-layer gradient */}
-        <div className="absolute inset-0 bg-[oklch(0.15_0.04_155)]" />
-        <div className="absolute inset-0 bg-gradient-to-br from-oklch-[0.12_0.06_155/0.9] via-oklch-[0.15_0.03_145/0.6] to-oklch-[0.20_0.05_120/0.4]" />
-        <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/20 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-r from-bg/60 via-transparent to-transparent" />
+      <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 bg-[oklch(0.15_0.04_155)] dark:bg-[oklch(0.20_0.05_155)]" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[oklch(0.12_0.03_155)] dark:from-[oklch(0.16_0.04_155)] to-transparent" />
 
-        {/* Subtle grain texture overlay */}
-        <div className="absolute inset-0 opacity-[0.03]" style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
-        }} />
+        <Aurora
+          colorStops={["#2d6a4f", "#52b788", "#2d6a4f"]}
+          amplitude={0.8}
+          blend={0.4}
+          speed={0.6}
+          className="absolute inset-0"
+        />
 
-        {/* Decorative accent glow */}
         <div className="absolute -bottom-32 -right-32 h-96 w-96 rounded-full bg-accent/10 blur-[120px]" />
-      </motion.div>
+      </div>
 
-      {/* Content — LEFT ALIGNED */}
+      {/* Content */}
       <div className="relative z-10 mx-auto w-full max-w-7xl px-4 pt-24 pb-16 sm:px-6 lg:px-8">
-        <motion.div
-          style={{
-            y: titleY,
-            filter: useTransform(titleBlur, (v) => `blur(${v}px)`),
-            scale: contentScale,
-          }}
-          className="max-w-3xl"
-        >
+        <div className="max-w-3xl">
           {/* Eyebrow */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
@@ -68,27 +45,22 @@ export function Hero() {
             </span>
           </motion.div>
 
-          {/* Title — left-aligned, massive serif */}
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
-            className="font-serif text-display-1 font-bold leading-[1.05] tracking-tight text-white"
-          >
-            Строим дома,
+          {/* Title */}
+          <h1 className="font-serif text-display-1 font-bold leading-[1.05] tracking-tight text-white">
+            <WordReveal text="Строим дома," delay={0.2} />
             <br />
-            в которые
+            <WordReveal text="в которые" delay={0.4} />
             <br />
             <span className="relative inline-block mt-1">
-              <span className="text-accent">влюбляются</span>
-              <motion.span
-                className="absolute -bottom-1 left-0 h-[2px] bg-accent/60"
-                initial={{ width: 0 }}
-                animate={{ width: "100%" }}
-                transition={{ duration: 0.8, delay: 1.0 }}
+              <ShinyText
+                text="влюбляются"
+                speed={3}
+                color="var(--accent)"
+                shineColor="#ffffff"
+                className="text-accent"
               />
             </span>
-          </motion.h1>
+          </h1>
 
           {/* Subtitle */}
           <motion.p
@@ -109,15 +81,15 @@ export function Hero() {
             className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center"
           >
             <Magnetic>
-              <Link href="/katalog">
-                <Button
-                  size="lg"
-                  className="gap-2.5 rounded-xl bg-white px-8 py-6 text-base font-semibold text-fg shadow-xl shadow-black/20 transition-all hover:bg-white/90 hover:shadow-2xl hover:shadow-black/30"
-                >
-                  Подобрать проект
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
-              </Link>
+              <Button
+                render={<Link href="/katalog" />}
+                nativeButton={false}
+                size="lg"
+                className="gap-2.5 px-8 py-6 text-base font-semibold rounded-xl bg-white text-fg hover:bg-white/90 dark:bg-primary dark:text-primary-fg dark:hover:bg-primary/90"
+              >
+                Подобрать проект
+                <ArrowRight className="h-4 w-4" />
+              </Button>
             </Magnetic>
             <Link href="/kontakty">
               <Button
@@ -129,9 +101,9 @@ export function Hero() {
               </Button>
             </Link>
           </motion.div>
-        </motion.div>
+        </div>
 
-        {/* Stats bar — bottom, full width */}
+        {/* Stats bar */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -142,25 +114,25 @@ export function Hero() {
             <div className="grid grid-cols-2 gap-8 sm:grid-cols-4 sm:gap-12">
               <div>
                 <div className="text-3xl font-bold text-white sm:text-4xl">
-                  <Counter to={15} suffix="+" />
+                  <NumberTicker value={15} className="text-white sm:text-4xl" />+
                 </div>
                 <div className="mt-1.5 text-sm text-white/40">Лет опыта</div>
               </div>
               <div>
                 <div className="text-3xl font-bold text-white sm:text-4xl">
-                  <Counter to={600} suffix="+" />
+                  <NumberTicker value={600} className="text-white sm:text-4xl" />+
                 </div>
                 <div className="mt-1.5 text-sm text-white/40">Домов построено</div>
               </div>
               <div>
                 <div className="text-3xl font-bold text-white sm:text-4xl">
-                  <Counter to={47} />
+                  <NumberTicker value={47} className="text-white sm:text-4xl" />
                 </div>
                 <div className="mt-1.5 text-sm text-white/40">Регионов России</div>
               </div>
               <div>
                 <div className="text-3xl font-bold text-white sm:text-4xl">
-                  <Counter to={4} suffix=".8" />
+                  <NumberTicker value={4.8} decimalPlaces={1} className="text-white sm:text-4xl" />
                 </div>
                 <div className="mt-1.5 text-sm text-white/40">Средний рейтинг</div>
               </div>
@@ -173,7 +145,7 @@ export function Hero() {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
+        transition={{ delay: 1.0 }}
         className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2"
       >
         <motion.div

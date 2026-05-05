@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Project } from "@/data/projects";
@@ -14,13 +15,15 @@ export function ProjectCard({ project }: ProjectCardProps) {
       href={`/katalog/${project.slug}`}
       className="group block overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:border-primary/20 hover:-translate-y-1 hover:shadow-lg"
     >
-      {/* Image placeholder */}
+      {/* Image */}
       <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-primary/5 to-primary/10">
-        <div className="flex h-full items-center justify-center">
-          <span className="text-4xl font-serif font-bold text-primary/20 sm:text-5xl">
-            {project.name}
-          </span>
-        </div>
+        <Image
+          src={project.images[0]}
+          alt={`Проект дома ${project.name}`}
+          fill
+          className="object-cover transition-transform duration-500 group-hover:scale-105"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+        />
         {project.popular && (
           <span className="absolute top-3 left-3 rounded-full bg-primary px-3 py-1 text-xs font-medium text-primary-fg">
             Популярный

@@ -67,7 +67,9 @@ export function FilterBar({ onMobileOpen }: FilterBarProps) {
       <div className="ml-auto">
         <Select value={sort} onValueChange={(v) => setSort(v)}>
           <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Сортировка" />
+            <SelectValue placeholder="Сортировка">
+              {sortOptions.find((o) => o.value === sort)?.label}
+            </SelectValue>
           </SelectTrigger>
           <SelectContent>
             {sortOptions.map((option) => (

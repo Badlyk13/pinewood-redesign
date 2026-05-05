@@ -1,6 +1,5 @@
 import type { MetadataRoute } from "next";
 import { projects } from "@/data/projects";
-import { comingSoonPages } from "@/data/coming-soon";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://pinewoodhomes.ru";
@@ -42,14 +41,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  const comingSoonPages_sitemap: MetadataRoute.Sitemap = comingSoonPages.map(
-    (p) => ({
-      url: `${SITE_URL}/coming-soon/${p.slug}`,
-      lastModified: now,
-      changeFrequency: "monthly" as const,
-      priority: 0.4,
-    })
-  );
-
-  return [...staticPages, ...projectPages, ...comingSoonPages_sitemap];
+  return [...staticPages, ...projectPages];
 }

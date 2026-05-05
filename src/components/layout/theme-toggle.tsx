@@ -9,6 +9,7 @@ export function ThemeToggle({ className }: { className?: string }) {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => setMounted(true), []);
 
   if (!mounted) {
@@ -27,7 +28,14 @@ export function ThemeToggle({ className }: { className?: string }) {
 
   return (
     <button
-      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+      onClick={(e) => {
+        const x = ((e.clientX / window.innerWidth) * 100).toFixed(1) + '%';
+        const y = ((e.clientY / window.innerHeight) * 100).toFixed(1) + '%';
+        document.documentElement.style.setProperty('--wipe-x', x);
+        document.documentElement.style.setProperty('--wipe-y', y);
+        setTheme(theme === "dark" ? "light" : "dark");
+      }}
+      style={{ viewTransitionName: 'theme-toggle' }}
       className={cn(
         "inline-flex h-9 w-9 items-center justify-center rounded-lg transition-colors hover:bg-secondary",
         className

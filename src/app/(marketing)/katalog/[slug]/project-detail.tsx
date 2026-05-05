@@ -1,11 +1,15 @@
 "use client";
 
+import Image from "next/image";
+import { useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, Download, Phone, CheckCircle2 } from "lucide-react";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { Container } from "@/components/shared/container";
 import { FadeUp } from "@/components/motion/fade-up";
+import { Lightbox } from "@/components/shared/lightbox";
+import { FloorPlanView } from "@/components/shared/floor-plan";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -19,6 +23,9 @@ interface ProjectDetailProps {
 }
 
 export function ProjectDetail({ project }: ProjectDetailProps) {
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+
   const similar = projects
     .filter((p) => p.slug !== project.slug && p.floors === project.floors)
     .slice(0, 3);
@@ -42,20 +49,44 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
               {/* Main image placeholder */}
               <div className="lg:col-span-2">
                 <FadeUp>
-                  <div className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-gradient-to-br from-primary/5 to-primary/10">
-                    <div className="flex h-full items-center justify-center">
-                      <span className="text-6xl font-serif font-bold text-primary/15">
-                        {project.name}
-                      </span>
-                    </div>
-                  </div>
+                  <button
+                    onClick={() => {
+                      setLightboxOpen(true);
+                      setLightboxIndex(0);
+                    }}
+                    className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-gradient-to-br from-primary/5 to-primary/10 cursor-pointer transition-all hover:scale-[1.01] focus:outline-none focus:ring-2 focus:ring-primary/50"
+                    aria-label="Открыть галерею"
+                  >
+                    <Image
+                      src={project.images[0]}
+                      alt={`Проект дома ${project.name}`}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 70vw, 60vw"
+                    />
+                  </button>
                   {/* Thumbnails */}
                   <div className="mt-3 flex gap-3">
-                    {project.images.map((_, i) => (
-                      <div
+                    {project.images.map((img, i) => (
+                      <button
                         key={i}
-                        className={`h-16 w-24 cursor-pointer rounded-lg bg-gradient-to-br ${i === 0 ? "from-primary/10 to-primary/20 ring-2 ring-primary" : "from-primary/5 to-primary/10"} transition-all`}
-                      />
+                        onClick={() => {
+                          setLightboxOpen(true);
+                          setLightboxIndex(i);
+                        }}
+                        className={`relative h-16 w-24 cursor-pointer overflow-hidden rounded-lg transition-all hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary/50 ${
+                          i === 0 ? "ring-2 ring-primary" : ""
+                        }`}
+                        aria-label={`Открыть изображение ${i + 1}`}
+                      >
+                        <Image
+                          src={img}
+                          alt={`Миниатюра ${i + 1} — ${project.name}`}
+                          fill
+                          className="object-cover"
+                          sizes="96px"
+                        />
+                      </button>
                     ))}
                   </div>
                 </FadeUp>
@@ -221,34 +252,7 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
               </TabsContent>
 
               <TabsContent value="plans" className="mt-8">
-                <div className="grid gap-6 sm:grid-cols-2">
-                  <div className="aspect-[4/3] rounded-2xl border border-border bg-surface p-8">
-                    <div className="flex h-full items-center justify-center">
-                      <div className="text-center">
-                        <p className="text-sm font-medium text-fg">
-                          План 1 этажа
-                        </p>
-                        <p className="mt-2 text-xs text-fg-muted">
-                          Планировка будет доступна в PDF
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  {project.floors > 1 && (
-                    <div className="aspect-[4/3] rounded-2xl border border-border bg-surface p-8">
-                      <div className="flex h-full items-center justify-center">
-                        <div className="text-center">
-                          <p className="text-sm font-medium text-fg">
-                            План 2 этажа
-                          </p>
-                          <p className="mt-2 text-xs text-fg-muted">
-                            Планировка будет доступна в PDF
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
+                <FloorPlanView slug={project.slug} />
               </TabsContent>
             </Tabs>
           </FadeUp>
@@ -273,6 +277,12 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
         )}
       </main>
       <Footer />
+      <Lightbox
+        images={project.images}
+        open={lightboxOpen}
+        onClose={() => setLightboxOpen(false)}
+        initialIndex={lightboxIndex}
+      />
     </>
   );
 }

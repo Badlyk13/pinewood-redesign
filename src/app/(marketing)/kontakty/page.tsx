@@ -1,24 +1,35 @@
-"use client";
-
+import type { Metadata } from "next";
+import { generatePageSEO } from "@/lib/seo";
+import { localBusinessSchema } from "@/lib/schema-org";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { Container } from "@/components/shared/container";
+import { YandexMap } from "@/components/shared/yandex-map";
 import { FadeUp } from "@/components/motion/fade-up";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import { ContactForm } from "@/components/forms/contact-form";
 import {
   Phone,
   Mail,
   MapPin,
   Clock,
-  Send,
 } from "lucide-react";
+
+export const metadata: Metadata = generatePageSEO({
+  title: "Контакты",
+  description:
+    "Свяжитесь с Pinewood Homes: телефон +7 (495) 123-45-67, email info@pinewoodhomes.ru. Производство в Одинцово, Московская область. Запишитесь на экскурсию.",
+  path: "/kontakty",
+});
 
 export default function ContactsPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(localBusinessSchema()),
+        }}
+      />
       <Header />
       <main className="min-h-screen pt-[4.5rem]">
         {/* Hero */}
@@ -36,11 +47,11 @@ export default function ContactsPage() {
           </Container>
         </section>
 
-        <Container className="py-12 sm:py-16 lg:py-20">
+        <Container className="py-10 sm:py-16 lg:py-20">
           <div className="grid gap-12 lg:grid-cols-2">
             {/* Contact info */}
             <FadeUp>
-              <div className="space-y-8">
+              <div className="space-y-6 sm:space-y-8">
                 {/* Address */}
                 <div className="flex items-start gap-4">
                   <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
@@ -105,17 +116,7 @@ export default function ContactsPage() {
                   </div>
                 </div>
 
-                {/* Map placeholder */}
-                <div className="aspect-[16/9] overflow-hidden rounded-2xl border border-border bg-surface">
-                  <div className="flex h-full items-center justify-center">
-                    <div className="text-center">
-                      <MapPin className="mx-auto h-8 w-8 text-primary/20" />
-                      <p className="mt-2 text-sm text-fg-muted">
-                        Yandex Map — загрузка при скролле
-                      </p>
-                    </div>
-                  </div>
-                </div>
+                <YandexMap />
 
                 {/* Legal */}
                 <div className="rounded-xl border border-border bg-surface p-4">
@@ -137,68 +138,8 @@ export default function ContactsPage() {
 
             {/* Contact form */}
             <FadeUp delay={0.2}>
-              <div className="rounded-2xl border border-border bg-card p-6 sm:p-8">
-                <h2 className="text-xl font-semibold text-fg">Задать вопрос</h2>
-                <p className="mt-2 text-sm text-fg-muted">
-                  Опишите ваш вопрос, и мы свяжемся с вами в ближайшее время.
-                </p>
-
-                <form
-                  className="mt-8 space-y-5"
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    alert("Спасибо! Мы свяжемся с вами в ближайшее время.");
-                  }}
-                >
-                  <div className="grid gap-5 sm:grid-cols-2">
-                    <div>
-                      <Label htmlFor="contact-name">Имя</Label>
-                      <Input
-                        id="contact-name"
-                        placeholder="Ваше имя"
-                        className="mt-1.5"
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="contact-phone">Телефон</Label>
-                      <Input
-                        id="contact-phone"
-                        type="tel"
-                        placeholder="+7 (___) ___-__-__"
-                        className="mt-1.5"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <Label htmlFor="contact-email">Email</Label>
-                    <Input
-                      id="contact-email"
-                      type="email"
-                      placeholder="your@email.com"
-                      className="mt-1.5"
-                    />
-                  </div>
-
-                  <div>
-                    <Label htmlFor="contact-message">Сообщение</Label>
-                    <Textarea
-                      id="contact-message"
-                      placeholder="Ваш вопрос или пожелания..."
-                      rows={5}
-                      className="mt-1.5"
-                    />
-                  </div>
-
-                  <Button type="submit" size="lg" className="w-full gap-2 rounded-xl">
-                    <Send className="h-4 w-4" />
-                    Отправить
-                  </Button>
-
-                  <p className="text-center text-xs text-fg-muted/60">
-                    Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности
-                  </p>
-                </form>
+              <div className="rounded-2xl border border-border bg-card p-4 sm:p-8">
+                <ContactForm />
               </div>
             </FadeUp>
           </div>

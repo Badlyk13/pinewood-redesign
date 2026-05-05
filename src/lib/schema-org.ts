@@ -64,13 +64,14 @@ export function productSchema(project: {
   priceFrom: number;
   area: number;
   slug: string;
+  images: string[];
 }) {
   return {
     "@context": "https://schema.org",
     "@type": "Product",
     name: `Дом ${project.name}`,
     description: project.description,
-    image: `${SITE_URL}/projects/${project.slug}/1.jpg`,
+    image: `${SITE_URL}${project.images[0]}`,
     offers: {
       "@type": "Offer",
       price: project.priceFrom,
